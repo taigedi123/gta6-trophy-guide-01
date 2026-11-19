@@ -3,23 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
-<link rel="stylesheet" href="style.css">
+<title>Platinum Road — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline guide and tracker for all 55 PlayStation 5 trophies of Grand Theft Auto VI: checklist, roadmap to the platinum, missables, and a cited guide for every trophy.">
+<link rel="stylesheet" href="css/base.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="hero">
+  <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; Offline guide &amp; tracker</p>
+  <h1>Platinum Road</h1>
+  <p class="subtitle">Every one of the 55 trophies, with a guide in our own words and its sources cited beside it.</p>
+  <div class="makeup" id="makeup">55 trophies &middot; 1 platinum &middot; 2 gold &middot; 6 silver &middot; 46 bronze &middot; 28 hidden &middot; 0 online</div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
-<script type="module" src="app.js"></script>
+
+<section class="progress-hero" aria-label="Progress to the platinum">
+  <div class="big-count"><span id="earnedCount">0</span><span class="of">/ 55 earned</span></div>
+  <div class="bar" role="progressbar" aria-label="Trophies earned" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="progressBarWrap"><div class="bar-fill" id="progressBar" style="width:0%"></div></div>
+  <div class="grade-counts" id="gradeCounts"></div>
+  <p class="next-up" id="nextUpLine"></p>
+</section>
+
+<nav class="tabs" aria-label="Guide sections">
+  <button type="button" data-view="checklist" class="tab active" aria-current="page">Checklist</button>
+  <button type="button" data-view="roadmap" class="tab">Roadmap</button>
+  <button type="button" data-view="missables" class="tab">Missables</button>
+  <button type="button" data-view="planner" class="tab">Next up</button>
+  <button type="button" data-view="about" class="tab">About &amp; sources</button>
+</nav>
+
+<main>
+  <section id="view-checklist" class="view active" aria-label="Trophy checklist">
+    <div class="toolbar">
+      <label class="search-label">Search <input id="search" type="search" placeholder="Name, mission or keyword — try “bank” or “meditate”" autocomplete="off"></label>
+      <label>Grade
+        <select id="gradeFilter">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label>Show
+        <select id="earnedFilter">
+          <option value="all">All trophies</option>
+          <option value="remaining">Not yet earned</option>
+          <option value="earned">Earned only</option>
+        </select>
+      </label>
+      <label class="switch"><input id="spoilerToggle" type="checkbox" checked> Hide story spoilers</label>
+      <label class="switch"><input id="hiddenToggle" type="checkbox"> Hidden only</label>
+    </div>
+    <div class="kind-chips" id="kindChips" role="group" aria-label="Filter by kind"></div>
+    <p class="list-count" id="listCount"></p>
+    <div class="checklist-wrap">
+      <ol class="trophy-list" id="trophyList"></ol>
+      <aside class="detail" id="detailPane" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section id="view-roadmap" class="view" aria-label="Roadmap to the platinum">
+    <p class="view-intro">The road to the platinum in eight stages, in order. Built from the official trophy descriptions alone — chapter and mission names, collectible counts and character strands all come from the list itself. <strong>Nothing here has been checked in the game yet.</strong></p>
+    <div id="roadmapList"></div>
+  </section>
+
+  <section id="view-missables" class="view" aria-label="Missable trophies">
+    <p class="view-intro">What you can miss, and what you cannot. Only one trophy in the list is reported as possibly missable — everything else can be earned after the story ends, in free roam.</p>
+    <div id="missablesList"></div>
+  </section>
+
+  <section id="view-planner" class="view" aria-label="Next up planner">
+    <p class="view-intro">What to do next, in roadmap order — the first trophies you have not earned yet, plus the ones closest to done.</p>
+    <div id="plannerList"></div>
+  </section>
+
+  <section id="view-about" class="view" aria-label="About this guide">
+    <h2>About this guide</h2>
+    <p><strong>Platinum Road</strong> is an offline guide and tracker for the 55 PlayStation 5 trophies of Grand Theft Auto VI. It is a static page: it fetches nothing, sends nothing, and saves your progress in this browser only (localStorage). Export your progress to a file and import it back any time.</p>
+    <h3>How honest is it?</h3>
+    <p>The game released on 19 November 2026. Every trophy name, description and grade here is PlayStation's own, as Exophase and PSNProfiles listed it — the two agree on all 55. The guides are written in our own words from those official descriptions. Where a guide step is not pinned down yet — a location, a trigger, a count — the guide says so plainly instead of inventing one. Specific facts that come from other guides are cited beside the trophy they belong to; no guide text is copied from anywhere.</p>
+    <h3>Sources</h3>
+    <ul class="source-list" id="aboutSources"></ul>
+    <h3>Keyboard</h3>
+    <p><kbd>/</kbd> focuses search &middot; <kbd>Esc</kbd> closes the guide pane &middot; <kbd>1</kbd>–<kbd>5</kbd> switches sections.</p>
+    <h3>Your data stays yours</h3>
+    <p>Progress, counters and notes live in this browser under the key <code>gta6-platinum-road-v1</code>. Nothing leaves the machine. Use Export below to back it up.</p>
+  </section>
+</main>
+
+<footer class="actions">
+  <button type="button" id="exportBtn">Export progress</button>
+  <label class="import-btn">Import progress <input id="importInput" type="file" accept="application/json,.json"></label>
+  <button type="button" id="resetBtn">Reset all progress</button>
+  <p class="fineprint">Names, descriptions and grades: PlayStation, via Exophase &amp; PSNProfiles. Guides: our own words. No Rockstar logo, artwork or game screenshots. PSN rarity figures as read 19 Nov 2026 — they move as more players earn each trophy.</p>
+</footer>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
